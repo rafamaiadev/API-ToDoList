@@ -1,4 +1,11 @@
 package br.com.raphael.todolist.domain.dto;
 
-public record TodoRequest() {
+import java.time.LocalDateTime;
+
+public record TodoRequest(
+        String title,
+        String description,
+        boolean concluded,
+        int priority
+) {
 }
