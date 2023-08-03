@@ -1,7 +1,8 @@
 package br.com.raphael.todolist.controller;
 
-import br.com.raphael.todolist.domain.dto.TodoRequest;
+import br.com.raphael.todolist.domain.dto.TodoCreateRequest;
 import br.com.raphael.todolist.domain.dto.TodoResponse;
+import br.com.raphael.todolist.domain.dto.TodoUpdateRequest;
 import br.com.raphael.todolist.domain.model.Todo;
 import br.com.raphael.todolist.mapper.TodoMapper;
 import br.com.raphael.todolist.service.TodoService;
@@ -11,37 +12,41 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/todos")
 public class TodoController {
-    private TodoService todoService;
+    private final TodoService todoService;
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
     }
     @PostMapping
-    public ResponseEntity<TodoResponse> create(@RequestBody @Valid TodoRequest todoRequest) {
-        Todo todo = TodoMapper.toTodo(todoRequest);
-        todoService.create(todo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(TodoMapper.toResponse(todo));
+    public ResponseEntity<List<TodoResponse>> create(@RequestBody @Valid TodoCreateRequest todoCreateRequest) {
+        Todo todo = TodoMapper.toTodo(todoCreateRequest);
+        List<Todo> updatedTodoList = todoService.create(todo);
+        List<TodoResponse> todoResponses = TodoMapper.toResponseList(updatedTodoList);
+        return ResponseEntity.status(HttpStatus.CREATED).body(todoResponses);
     }
+
     @GetMapping
     public ResponseEntity<List<Todo>> list() {
         return ResponseEntity.status(HttpStatus.OK).body(todoService.list());
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<TodoResponse> update(@PathVariable(value = "id") Long id,
-                                               @RequestBody TodoRequest todoRequest) {
-        Optional<Todo> optionalTodo = todoService.listById(id);
-        Todo todo = optionalTodo.get();
-        todo = TodoMapper.toTodo(todoRequest);
+    @PutMapping("/concluded/{id}")
+    public ResponseEntity<List<TodoResponse>> update(@PathVariable(value = "id") Long id,
+                                               @RequestBody TodoUpdateRequest todoUpdate) {
+        Todo todo;
+        todo = todoService.findById(id);
+        TodoMapper.todoUpdateProperties(todoUpdate, todo);
         todoService.update(todo);
-        return ResponseEntity.status(HttpStatus.OK).body(TodoMapper.toResponse(todo));
+        List<Todo> todoList = todoService.list();
+        List<TodoResponse> todoResponseList = TodoMapper.toResponseList(todoList);
+        return ResponseEntity.status(HttpStatus.OK).body(todoResponseList);
     }
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
-        return todoService.delete(id);
+    public ResponseEntity<List<Todo>> delete(@PathVariable(value = "id") Long id) {
+        List<Todo> todoList = todoService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(todoList);
     }
 }

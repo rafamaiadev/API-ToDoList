@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TodoService {
@@ -17,26 +16,27 @@ public class TodoService {
         this.todoRepository = todoRepository;
     }
 
-    public Todo create(Todo todo) {
-        return todoRepository.save(todo);
+    public List<Todo> create(Todo todo) {
+        todoRepository.save(todo);
+        return list();
     }
 
-    public Optional<Todo> listById(Long id) {
-        return Optional.ofNullable(todoRepository.findById(id).orElseThrow(() -> new ServiceException("Product not found")));
-    }
     public List<Todo> list() {
         Sort sort = Sort.by(Sort.Direction.DESC, "priority");
        return todoRepository.findAll(sort);
     }
 
-    public Todo update(Todo todo) {
-        return todoRepository.save(todo);
+    public Todo findById(Long id) {
+        return todoRepository.findById(id).orElseThrow(() -> new ServiceException("Task not found"));
     }
 
-    public String delete(Long id) {
-        Optional<Todo> optionalTodo = todoRepository.findById(id);
-        Todo todo = optionalTodo.orElse(null);
-        todoRepository.delete(todo);
-        return "Deleted successfully";
+    public List<Todo> update(Todo todo) {
+        todoRepository.save(todo);
+        return list();
+    }
+
+    public List<Todo> delete(Long id) {
+        todoRepository.deleteById(id);
+        return list();
     }
 }

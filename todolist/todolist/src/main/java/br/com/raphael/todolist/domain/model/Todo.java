@@ -86,4 +86,15 @@ public class Todo {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+    @PrePersist
+    public void prePersist() {
+        if (creationDate == null) {
+            creationDate = LocalDateTime.now();
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        completionDate = LocalDateTime.now();
+    }
 }
