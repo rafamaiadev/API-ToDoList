@@ -22,13 +22,16 @@ public class TodoMapper {
         todo.setTitle(todoUpdateRequest.title());
         todo.setDescription(todoUpdateRequest.description());
         todo.setPriority(todoUpdateRequest.priority());
-        todo.setConcluded(true);
+        todo.setConcluded(todoUpdateRequest.concluded());
+        if (todo.isConcluded() == false) {
+            todo.setCompletionDate(null);
+        }
         return todo;
     }
     public static TodoResponse toResponse(Todo todo) {
         return new TodoResponse(
                 todo.getId(), todo.getTitle(), todo.getDescription(),
-                todo.isConcluded(), todo.getCreationDate(), todo.getCompletionDate(),
+                todo.isConcluded(), todo.getFormattedCreationDate(), todo.getFormattedCompletionDate(),
                 todo.getPriority());
     }
     public static List<TodoResponse> toResponseList(List<Todo> todoList) {

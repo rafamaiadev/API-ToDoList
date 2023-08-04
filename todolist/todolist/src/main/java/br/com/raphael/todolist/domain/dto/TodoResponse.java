@@ -7,7 +7,7 @@ public record TodoResponse(
         String title,
         String description,
         boolean concluded,
-        LocalDateTime creationDate,
-        LocalDateTime completionDate,
+        String creationDate,
+        String completionDate,
         int priority) {
 }
