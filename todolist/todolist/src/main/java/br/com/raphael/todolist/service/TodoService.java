@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class TodoService {
 
-    private TodoRepository todoRepository;
+    private final TodoRepository todoRepository;
 
     public TodoService(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
@@ -26,7 +26,7 @@ public class TodoService {
 
     public List<Todo> list() {
         Sort sort = Sort.by(Sort.Direction.DESC, "priority");
-       return todoRepository.findAll(sort);
+        return todoRepository.findAll(sort);
     }
 
     public Todo findById(Long id) {

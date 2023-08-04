@@ -16,6 +16,7 @@ public class TodoMapper {
         todo.setPriority(request.priority());
         return todo;
     }
+
     public static Todo todoUpdateProperties(TodoUpdateRequest todoUpdateRequest,
                                             Todo todo) {
         if (todoUpdateRequest.title() != null) {
@@ -30,13 +31,15 @@ public class TodoMapper {
 
         return todo;
     }
+
     public static TodoResponse toResponse(Todo todo) {
         return new TodoResponse(
                 todo.getId(), todo.getTitle(), todo.getDescription(),
-                todo.isConcluded(), todo.getCreationDate(),todo.getCompletionDate(),
+                todo.isConcluded(), todo.getCreationDate(), todo.getCompletionDate(),
                 todo.getPriority());
 
     }
+
     public static List<TodoResponse> toResponseList(List<Todo> todoList) {
         return todoList.stream()
                 .map(TodoMapper::toResponse)

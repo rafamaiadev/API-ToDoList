@@ -16,6 +16,7 @@ public class Todo {
     private LocalDateTime creationDate;
     private LocalDateTime completionDate;
     private int priority;
+
     public Todo(String title, String description, boolean concluded,
                 LocalDateTime creationDate, LocalDateTime completionDate, int priority) {
         this.title = title;

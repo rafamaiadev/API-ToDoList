@@ -25,6 +25,7 @@ public class TodoController {
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
     }
+
     @PostMapping
     @Operation(summary = "Criar uma nova todo", method = "POST")
     public ResponseEntity<List<TodoResponse>> create(@RequestBody @Valid TodoCreateRequest todoCreateRequest) {
@@ -39,10 +40,11 @@ public class TodoController {
     public ResponseEntity<List<Todo>> list() {
         return ResponseEntity.status(HttpStatus.OK).body(todoService.list());
     }
+
     @PutMapping("/edit/{id}")
     @Operation(summary = "Atualizar 1 atributo ou mais de uma todo pelo id", method = "PUT")
     public ResponseEntity<List<TodoResponse>> updateEdit(@PathVariable(value = "id") Long id,
-                                               @RequestBody TodoUpdateRequest todoUpdate) {
+                                                         @RequestBody TodoUpdateRequest todoUpdate) {
         Todo todo;
         todo = todoService.findById(id);
         TodoMapper.todoUpdateProperties(todoUpdate, todo);
@@ -64,8 +66,6 @@ public class TodoController {
         List<TodoResponse> todoResponseList = TodoMapper.toResponseList(todoList);
         return ResponseEntity.status(HttpStatus.OK).body(todoResponseList);
     }
-
-
 
 
     @DeleteMapping("/{id}")
