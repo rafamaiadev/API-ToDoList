@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TodoMapper {
-
     public static Todo toTodo(TodoCreateRequest request) {
         Todo todo = new Todo();
         todo.setTitle(request.title());
@@ -19,20 +18,24 @@ public class TodoMapper {
     }
     public static Todo todoUpdateProperties(TodoUpdateRequest todoUpdateRequest,
                                             Todo todo) {
-        todo.setTitle(todoUpdateRequest.title());
-        todo.setDescription(todoUpdateRequest.description());
-        todo.setPriority(todoUpdateRequest.priority());
-        todo.setConcluded(todoUpdateRequest.concluded());
-        if (todo.isConcluded() == false) {
-            todo.setCompletionDate(null);
+        if (todoUpdateRequest.title() != null) {
+            todo.setTitle(todoUpdateRequest.title());
         }
+        if (todoUpdateRequest.description() != null) {
+            todo.setDescription(todoUpdateRequest.description());
+        }
+        if (todoUpdateRequest.priority() != 0) {
+            todo.setPriority(todoUpdateRequest.priority());
+        }
+
         return todo;
     }
     public static TodoResponse toResponse(Todo todo) {
         return new TodoResponse(
                 todo.getId(), todo.getTitle(), todo.getDescription(),
-                todo.isConcluded(), todo.getFormattedCreationDate(), todo.getFormattedCompletionDate(),
+                todo.isConcluded(), todo.getCreationDate(),todo.getCompletionDate(),
                 todo.getPriority());
+
     }
     public static List<TodoResponse> toResponseList(List<Todo> todoList) {
         return todoList.stream()

@@ -3,7 +3,6 @@ package br.com.raphael.todolist.domain.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "todos")
@@ -17,7 +16,6 @@ public class Todo {
     private LocalDateTime creationDate;
     private LocalDateTime completionDate;
     private int priority;
-    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     public Todo(String title, String description, boolean concluded,
                 LocalDateTime creationDate, LocalDateTime completionDate, int priority) {
         this.title = title;
@@ -87,24 +85,5 @@ public class Todo {
     public void setPriority(int priority) {
         this.priority = priority;
     }
-    @PrePersist
-    public void prePersist() {
-        if (creationDate == null) {
-            creationDate = LocalDateTime.now();
-        }
-    }
 
-    @PreUpdate
-    public void preUpdate() {
-        if (concluded) {
-            completionDate = LocalDateTime.now();
-        }
-    }
-    public String getFormattedCreationDate() {
-        return creationDate.format(fmt);
-    }
-
-    public String getFormattedCompletionDate() {
-        return completionDate != null ? completionDate.format(fmt) : null;
-    }
 }

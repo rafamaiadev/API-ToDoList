@@ -11,10 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/todos")
+@RequestMapping(value = "/todos", produces = {"application/json"})
 public class TodoController {
     private final TodoService todoService;
 
@@ -33,8 +34,8 @@ public class TodoController {
     public ResponseEntity<List<Todo>> list() {
         return ResponseEntity.status(HttpStatus.OK).body(todoService.list());
     }
-    @PutMapping("/concluded/{id}")
-    public ResponseEntity<List<TodoResponse>> update(@PathVariable(value = "id") Long id,
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<List<TodoResponse>> updateEdit(@PathVariable(value = "id") Long id,
                                                @RequestBody TodoUpdateRequest todoUpdate) {
         Todo todo;
         todo = todoService.findById(id);
@@ -44,6 +45,22 @@ public class TodoController {
         List<TodoResponse> todoResponseList = TodoMapper.toResponseList(todoList);
         return ResponseEntity.status(HttpStatus.OK).body(todoResponseList);
     }
+
+    @PutMapping("/concluded/{id}")
+    public ResponseEntity<List<TodoResponse>> Finish(@PathVariable(value = "id") Long id) {
+        Todo todo;
+        todo = todoService.findById(id);
+        todo.setConcluded(true);
+        todo.setCompletionDate(LocalDateTime.now());
+        todoService.update(todo);
+        List<Todo> todoList = todoService.list();
+        List<TodoResponse> todoResponseList = TodoMapper.toResponseList(todoList);
+        return ResponseEntity.status(HttpStatus.OK).body(todoResponseList);
+    }
+
+
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<List<Todo>> delete(@PathVariable(value = "id") Long id) {
         List<Todo> todoList = todoService.delete(id);

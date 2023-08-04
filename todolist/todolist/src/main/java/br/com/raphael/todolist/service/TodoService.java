@@ -6,10 +6,12 @@ import br.com.raphael.todolist.repository.TodoRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class TodoService {
+
     private TodoRepository todoRepository;
 
     public TodoService(TodoRepository todoRepository) {
@@ -17,6 +19,7 @@ public class TodoService {
     }
 
     public List<Todo> create(Todo todo) {
+        todo.setCreationDate(LocalDateTime.now());
         todoRepository.save(todo);
         return list();
     }
