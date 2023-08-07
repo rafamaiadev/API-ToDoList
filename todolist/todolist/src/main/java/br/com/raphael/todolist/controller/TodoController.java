@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/todos", produces = {"application/json"})
 @Tag(name = "todolist-api")
