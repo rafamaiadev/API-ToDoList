@@ -18,10 +18,6 @@ API feita para fazer o gerenciamento de tarefas
 - Tratamento adequado das respostas de erro para fornecer mensagens claras e úteis aos usuários
 - Geração automática da documentação da API com o Swagger e OpenAPI 3
 
-## Como Executar
+## Como Acessar
 
-Para executar a API de Todo List, siga os passos abaixo:
-- Clone este repositório em sua máquina local:
-- Faça o build do projeto
-
-a API pode ser acessada usando o swagger na sua máquina pelo `http://localhost:8080/swagger-ui/index.html`
+#### a API pode ser acessada pelo link do swagger onde foi feito o deploy `https://todo-list-api-production-ebdf.up.railway.app/swagger-ui/index.html`
