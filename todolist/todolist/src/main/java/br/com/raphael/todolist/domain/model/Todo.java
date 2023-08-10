@@ -1,5 +1,6 @@
 package br.com.raphael.todolist.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,9 @@ public class Todo {
     private String title;
     private String description;
     private boolean concluded;
+
     private LocalDateTime creationDate;
+
     private LocalDateTime completionDate;
     private int priority;
 

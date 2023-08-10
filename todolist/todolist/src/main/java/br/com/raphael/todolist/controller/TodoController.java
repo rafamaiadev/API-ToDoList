@@ -37,8 +37,10 @@ public class TodoController {
 
     @GetMapping
     @Operation(summary = "Listar todas as Todos", method = "GET")
-    public ResponseEntity<List<Todo>> list() {
-        return ResponseEntity.status(HttpStatus.OK).body(todoService.list());
+    public ResponseEntity<List<TodoResponse>> list() {
+        List<Todo> todos = todoService.list();
+        List<TodoResponse> todoResponses = TodoMapper.toResponseList(todos);
+        return ResponseEntity.status(HttpStatus.OK).body(todoResponses);
     }
 
     @PutMapping("/edit/{id}")
