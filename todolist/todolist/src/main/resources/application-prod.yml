@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${jdbc:mysql://root:qZXmVzdcFArQSg6ujdZ3@containers-us-west-184.railway.app:7850/railway}
+    url: jdbc:mysql://root:qZXmVzdcFArQSg6ujdZ3@containers-us-west-184.railway.app:7850/railway
 
     jpa:
       hibernate:
