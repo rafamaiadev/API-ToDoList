@@ -11,6 +11,8 @@ spring:
     url: ${MYSQL_URL}
     username: ${MYSQLUSER}
     password: ${MYSQLPASSWORD}
+    port-number: ${MYSQLPORT}
+    database-name: ${MYSQLDATABASE}
 
 
 
