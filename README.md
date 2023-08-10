@@ -19,5 +19,4 @@ API feita para fazer o gerenciamento de tarefas
 - Geração automática da documentação da API com o Swagger e OpenAPI 3
 
 ## Como Acessar
-
-#### a API pode ser acessada pelo link do swagger onde foi feito o deploy `https://todo-list-api-production-ebdf.up.railway.app/swagger-ui/index.html`
+A API pode ser acessada pelo link do swagger onde foi feito o deploy `https://todo-list-api-production-ebdf.up.railway.app/swagger-ui/index.html`
